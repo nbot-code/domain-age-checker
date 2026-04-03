@@ -5,19 +5,19 @@ description: Look up a domain's registration date, expiration date, age, and day
 
 # Domain Age Checker
 
-Use this skill to check domain age and registration details through the Domain Age Checker API.
+## Description
 
-## Endpoint
+Check any domain's registration date, expiration date, age, and days until expiration. Useful for verifying domain legitimacy, checking how established a website is, or monitoring domain expiration.
+
+## API Endpoint
 
 ```text
 GET https://api-dac.nader.io?domain={domain}
 ```
 
-## Input
+## Parameters
 
-- Accept a bare domain like `google.com` or a full URL like `https://google.com/some/path`.
-- Extract and normalize the domain before calling the API.
-- Always send the cleaned domain in the `domain` query parameter.
+- `domain` (required): The domain name to look up (e.g. "google.com"). URLs are automatically cleaned.
 
 ## Example request
 
@@ -25,7 +25,7 @@ GET https://api-dac.nader.io?domain={domain}
 GET https://api-dac.nader.io?domain=google.com
 ```
 
-## Example response
+## Example Response
 
 ```json
 {
@@ -37,22 +37,18 @@ GET https://api-dac.nader.io?domain=google.com
 }
 ```
 
-## Workflow
+## Error Codes
 
-1. Extract the domain from the user's input.
-2. Call the API endpoint.
-3. Read `created`, `expires`, `age`, and `daysLeft` from the response.
-4. Summarize the result naturally.
-5. If the user is evaluating trust or legitimacy, present domain age as one signal rather than proof.
-
-## Error handling
-
-- `400`: Missing domain parameter.
-- `404`: Domain not found or no registration data available.
-- `429`: Rate limit exceeded.
+- `400`: Missing domain parameter
+- `404`: Domain not found or no registration data available
+- `429`: Rate limit exceeded (50 requests/day)
 
 If the API returns an error, explain it plainly and ask for a different domain only when needed.
 
+## Usage Instructions
+
+When a user asks about a domain's age, registration date, or expiration, make a GET request to the endpoint above with the domain as a query parameter. Parse the JSON response and present the information naturally.
+
 ## Link
 
-- Web app: https://dac.nader.io/
+- Web app: https://dac.nader.io
