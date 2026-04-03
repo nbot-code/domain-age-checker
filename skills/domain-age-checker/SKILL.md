@@ -1,27 +1,32 @@
 ---
 name: domain-age-checker
-description: Check any domain's registration date, expiration date, age, and days until expiration.
+description: Look up a domain's registration date, expiration date, age, and days until expiration. Use when a user asks how old a site or domain is, when a domain was registered, when it expires, whether it looks established, or whether a URL/domain looks credible based on age.
 ---
 
 # Domain Age Checker
 
-## Description
-Check any domain's registration date, expiration date, age, and days until expiration. Useful for verifying domain legitimacy, checking how established a website is, or monitoring domain expiration.
+Use this skill to check domain age and registration details through the Domain Age Checker API.
 
-## API Endpoint
-```
+## Endpoint
+
+```text
 GET https://api-dac.nader.io?domain={domain}
 ```
 
-## Parameters
-- `domain` (required): The domain name to look up (e.g. "google.com"). URLs are automatically cleaned.
+## Input
 
-## Example Request
-```
+- Accept a bare domain like `google.com` or a full URL like `https://google.com/some/path`.
+- Extract and normalize the domain before calling the API.
+- Always send the cleaned domain in the `domain` query parameter.
+
+## Example request
+
+```text
 GET https://api-dac.nader.io?domain=google.com
 ```
 
-## Example Response
+## Example response
+
 ```json
 {
   "domain": "google.com",
@@ -32,10 +37,18 @@ GET https://api-dac.nader.io?domain=google.com
 }
 ```
 
-## Error Codes
-- `400` â€” Missing domain parameter
-- `404` â€” Domain not found or no registration data available
-- `429` â€” Rate limit exceeded (50 requests/day)
+## Workflow
 
-## Usage Instructions
-When a user asks about a domain's age, registration date, or expiration, make a GET request to the endpoint above with the domain as a query parameter. Parse the JSON response and present the information naturally.
+1. Extract the domain from the user's input.
+2. Call the API endpoint.
+3. Read `created`, `expires`, `age`, and `daysLeft` from the response.
+4. Summarize the result naturally.
+5. If the user is evaluating trust or legitimacy, present domain age as one signal rather than proof.
+
+## Error handling
+
+- `400` — Missing domain parameter.
+- `404` — Domain not found or no registration data available.
+- `429` — Rate limit exceeded.
+
+If the API returns an error, explain it plainly and ask for a different domain only when needed.
