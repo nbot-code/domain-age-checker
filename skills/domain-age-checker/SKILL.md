@@ -47,8 +47,12 @@ GET https://api-dac.nader.io?domain=google.com
 
 ## Error handling
 
-- `400` — Missing domain parameter.
-- `404` — Domain not found or no registration data available.
-- `429` — Rate limit exceeded.
+- `400`: Missing domain parameter.
+- `404`: Domain not found or no registration data available.
+- `429`: Rate limit exceeded.
 
 If the API returns an error, explain it plainly and ask for a different domain only when needed.
+
+## Link
+
+- Web app: https://dac.nader.io/
